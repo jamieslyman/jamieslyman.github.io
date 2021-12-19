@@ -95,13 +95,13 @@
         if (seconds < 10) {seconds = "0"+seconds;}
         return hours+':'+minutes+':'+seconds;
     }
-    if (getCookie("hourlyRate") != undefined || getCookie("hourlyRate") != "") {
+    if (getCookie("hourlyRate") != undefined) {
         document.getElementById("hourlyRate").value = getCookie("hourlyRate");
     } else {
         document.getElementById("hourlyRate").value = 15;
     }
     var x = setInterval(function() {
-        if (getCookie("time") != undefined || getCookie("time") != "") {
+        if (getCookie("time") != undefined) {
             var distance = new Date().getTime() - getCookie("time");
             document.getElementById("money").innerHTML = (distance*(document.getElementById("hourlyRate").value/60/60)).toFixed(2);
             document.getElementById("time").innerHTML = String(distance).toHHMMSS();
@@ -111,7 +111,7 @@
         }
     }, 100);
     function startStopTimer() {
-        if (getCookie("time") == undefined || getCookie("time") == "") {
+        if (getCookie("time") == undefined) {
             setCookie("time", new Date().getTime());
             setCookie("hourlyRate", document.getElementById("hourlyRate").value);
             document.getElementById("button").innerHTML = "Stop!";
