@@ -42,6 +42,29 @@
         }
     </style>
     <script>
+        function getCookie(name) {
+            let m = document.cookie.match(new RegExp(
+                "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+            ));
+            return matches ? decodeURIComponent(m[1]) : undefined;
+        }
+        function setCookie(name, value, options = {}) {
+                options = {
+                path: '/'
+            };
+            if (options.expires instanceof Date) {
+                options.expires = options.expires.toUTCString();
+            }
+                let updatedCookie = encodeURIComponent(name) + "=" + encodeURIComponent(value);
+            for (let optKey in options) {
+                updatedCookie += "; " + optKey;
+                let optValue = options[optKey];
+                if (optValue !== true) {
+                    updatedCookie += "=" + optValue;
+                }
+            }
+            document.cookie = updatedCookie;
+        }
         String.prototype.toHHMMSS = function () {
             var sec_num = parseInt(this, 10); // don't forget the second param
             var hours   = Math.floor(sec_num / 3600);
@@ -53,10 +76,15 @@
             if (seconds < 10) {seconds = "0"+seconds;}
             return hours+':'+minutes+':'+seconds;
         }
+        if (getCookie("hourlyRate") != undefined) {
+            document.getElementById("hourlyRate").value = getCookie("hourlyRate");
+        } else {
+            document.getElementById("hourlyRate").value = 15;
+        }
         var x = setInterval(function() {
-            if (document.cookie != "") {
+            if (getCookie("time") == undefined) {
                 var now = new Date().getTime();
-                var distance = now - document.cookie;
+                var distance = now - getCookie;
                 var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                 var seconds = Math.floor((distance % (1000 * 60)) / 1000);
@@ -65,15 +93,15 @@
             }
         }, 100);
         function startStopTimer() {
-            if (document.cookie == "") {
+            if (getCookie("time") == undefined) {
 		var a = new Date().getTime();
-                console.log(a)
-                document.cookie = a;
-                console.log(document.cookie)
+                setCookie("time", a);
+                setCookie("hourlyRate", document.getElementById("hourlyRate").value);
                 document.getElementById("button").innerHTML = "Stop!";
                 document.getElementById("hourlyRate").disabled = true;
             } else {
-                document.cookie = "";
+                setCookie("time", "", {'max-age': -1});
+                setCookie("hourlyRate", "", {'max-age': -1});
                 document.getElementById("button").innerHTML = "Start!"
                 document.getElementById("hourlyRate").disabled = false;
             }
