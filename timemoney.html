@@ -95,7 +95,7 @@
           document.getElementById("hourlyRate").value = 15;
       }
       var x = setInterval(function() {
-          if (getCookie("time") == undefined || getCookie("time") == "") {
+          if (getCookie("time") != undefined || getCookie("time") != "") {
               var now = new Date().getTime();
               var distance = now - getCookie("time");
               var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -113,8 +113,7 @@
               document.getElementById("button").innerHTML = "Stop!";
               document.getElementById("hourlyRate").disabled = true;
           } else {
-              setCookie("time", "", {'max-age': -1});
-              setCookie("hourlyRate", "", {'max-age': -1});
+              document.cookie = ""
               document.getElementById("button").innerHTML = "Start!"
               document.getElementById("hourlyRate").disabled = false;
           }
