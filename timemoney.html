@@ -78,13 +78,13 @@
 			if (seconds < 10) {seconds = "0"+seconds;}
 			return hours+':'+minutes+':'+seconds;
 		}
-		if (getCookie("hourlyRate") != undefined) {
+		if (getCookie("hourlyRate") != undefined or getCookie("hourlyRate") != "") {
 			document.getElementById("hourlyRate").value = getCookie("hourlyRate");
 		} else {
 			document.getElementById("hourlyRate").value = 15;
 		}
 		var x = setInterval(function() {
-			if (getCookie("time") == undefined) {
+			if (getCookie("time") == undefined or getCookie("hourlyRate") != "") {
 				var now = new Date().getTime();
 				var distance = now - getCookie("time");
 				var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
