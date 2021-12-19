@@ -105,9 +105,6 @@
             var distance = new Date().getTime() - getCookie("time");
             document.getElementById("money").innerHTML = (distance*(document.getElementById("hourlyRate").value/60/60)).toFixed(2);
             document.getElementById("time").innerHTML = String(distance).toHHMMSS();
-        } else {
-            document.getElementById("money").innerHTML = "0.00";
-            document.getElementById("time").innerHTML = "0:00:00";
         }
     }, 100);
     function startStopTimer() {
