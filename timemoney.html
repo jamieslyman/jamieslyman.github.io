@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
   <meta charset="utf-8">
   <head>
@@ -12,7 +13,7 @@
         }
         #money::before{
             content:"$";
-            font-size:2.1vw;
+            font-size:10.4vw;
         }
         #money{
             font-family:sans-serif;
@@ -59,8 +60,8 @@
                 var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                 var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                document.getElementById("money").innerHTML = distance*(document.getElementById("hourlyRate").value/60/60).toFixed(2)
-                document.getElementById("time").innerHTML = String(distance).toHHMMSS;
+                document.getElementById("money").innerHTML = distance*(document.getElementById("hourlyRate").value/60/60).toFixed(2);
+                document.getElementById("time").innerHTML = String(distance).toHHMMSS();
             }
         }, 100);
         function startStopTimer() {
