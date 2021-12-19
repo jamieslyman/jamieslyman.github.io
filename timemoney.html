@@ -43,7 +43,7 @@
     </style>
     <script>
         function getCookie(name) {
-            let m = document.cookie.match(new RegExp(
+            let matches = document.cookie.match(new RegExp(
                 "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
             ));
             return matches ? decodeURIComponent(m[1]) : undefined;
