@@ -104,7 +104,7 @@
         if (getCookie("time") != undefined) {
             var distance = new Date().getTime() - getCookie("time");
             document.getElementById("money").innerHTML = (distance*(document.getElementById("hourlyRate").value/60/60/1000)).toFixed(2);
-            document.getElementById("time").innerHTML = String(distance).toHHMMSS();
+            document.getElementById("time").innerHTML = String(distance/1000).toHHMMSS();
         }
     }, 100);
     function startStopTimer() {
