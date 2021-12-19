@@ -56,68 +56,70 @@
 </body>
 <script>
     function getCookie(name) {
-          let matches = document.cookie.match(new RegExp(
-              "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
-          ));
-          return matches ? decodeURIComponent(matches[1]) : undefined;
-      }
-      function setCookie(name, value, options = {}) {
-              options = {
-              path: '/'
-          };
-          if (options.expires instanceof Date) {
-              options.expires = options.expires.toUTCString();
-          }
-              let updatedCookie = encodeURIComponent(name) + "=" + encodeURIComponent(value);
-          for (let optKey in options) {
-              updatedCookie += "; " + optKey;
-              let optValue = options[optKey];
-              if (optValue !== true) {
-                  updatedCookie += "=" + optValue;
-              }
-          }
-          document.cookie = updatedCookie;
-      }
-      String.prototype.toHHMMSS = function () {
-          var sec_num = parseInt(this, 10); // don't forget the second param
-          var hours   = Math.floor(sec_num / 3600);
-          var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
-          var seconds = sec_num - (hours * 3600) - (minutes * 60);
+        let matches = document.cookie.match(new RegExp(
+            "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+        ));
+        return matches ? decodeURIComponent(matches[1]) : undefined;
+    }
+    function setCookie(name, value, options = {}) {
+        options = {
+            path: '/'
+            ...options
+        };
+        if (options.expires instanceof Date) {
+            options.expires = options.expires.toUTCString();
+        }
+        let updatedCookie = encodeURIComponent(name) + "=" + encodeURIComponent(value);
+        for (let optKey in options) {
+            updatedCookie += "; " + optKey;
+            let optValue = options[optKey];
+            if (optValue !== true) {
+                updatedCookie += "=" + optValue;
+            }
+        }
+        document.cookie = updatedCookie;
+    }
+    function deleteCookie(name) {
+        setCookie(name, "", {
+            'max-age': -1
+        })
+    }
+    String.prototype.toHHMMSS = function () {
+        var sec_num = parseInt(this, 10); // don't forget the second param
+        var hours   = Math.floor(sec_num / 3600);
+        var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+        var seconds = sec_num - (hours * 3600) - (minutes * 60);
 
-          if (hours   < 10) {hours   = "0"+hours;}
-          if (minutes < 10) {minutes = "0"+minutes;}
-          if (seconds < 10) {seconds = "0"+seconds;}
-          return hours+':'+minutes+':'+seconds;
-      }
-      if (getCookie("hourlyRate") != undefined || getCookie("hourlyRate") != "") {
-          document.getElementById("hourlyRate").value = getCookie("hourlyRate");
-      } else {
-          document.getElementById("hourlyRate").value = 15;
-      }
-      var x = setInterval(function() {
-          if (getCookie("time") != undefined || getCookie("time") != "") {
-              var now = new Date().getTime();
-              var distance = now - getCookie("time");
-              var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-              var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-              var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-              document.getElementById("money").innerHTML = (distance*(document.getElementById("hourlyRate").value/60/60)).toFixed(2);
-              document.getElementById("time").innerHTML = String(distance).toHHMMSS();
-          }
-      }, 100);
-      function startStopTimer() {
-          if (getCookie("time") == undefined || getCookie("time") == "") {
-              var a = new Date().getTime();
-              setCookie("time", a);
-              setCookie("hourlyRate", document.getElementById("hourlyRate").value);
-              document.getElementById("button").innerHTML = "Stop!";
-              document.getElementById("hourlyRate").disabled = true;
-          } else {
-              document.cookie = ""
-              document.getElementById("button").innerHTML = "Start!"
-              document.getElementById("hourlyRate").disabled = false;
-          }
-      }
+        if (hours   < 10) {hours   = "0"+hours;}
+        if (minutes < 10) {minutes = "0"+minutes;}
+        if (seconds < 10) {seconds = "0"+seconds;}
+        return hours+':'+minutes+':'+seconds;
+    }
+    if (getCookie("hourlyRate") != undefined || getCookie("hourlyRate") != "") {
+        document.getElementById("hourlyRate").value = getCookie("hourlyRate");
+    } else {
+        document.getElementById("hourlyRate").value = 15;
+    }
+    var x = setInterval(function() {
+        if (getCookie("time") != undefined || getCookie("time") != "") {
+            var distance = new Date().getTime() - getCookie("time");
+            document.getElementById("money").innerHTML = (distance*(document.getElementById("hourlyRate").value/60/60)).toFixed(2);
+            document.getElementById("time").innerHTML = String(distance).toHHMMSS();
+        }
+    }, 100);
+    function startStopTimer() {
+        if (getCookie("time") == undefined || getCookie("time") == "") {
+            setCookie("time", new Date().getTime());
+            setCookie("hourlyRate", document.getElementById("hourlyRate").value);
+            document.getElementById("button").innerHTML = "Stop!";
+            document.getElementById("hourlyRate").disabled = true;
+        } else {
+            deleteCookie("time")
+            deleteCookie("hourlyRate")
+            document.getElementById("button").innerHTML = "Start!"
+            document.getElementById("hourlyRate").disabled = false;
+        }
+    }
 </script>
 
 </html>
