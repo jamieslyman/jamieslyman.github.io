@@ -103,7 +103,7 @@
     var x = setInterval(function() {
         if (getCookie("time") != undefined) {
             var distance = new Date().getTime() - getCookie("time");
-            document.getElementById("money").innerHTML = (distance*(document.getElementById("hourlyRate").value/60/60)).toFixed(2);
+            document.getElementById("money").innerHTML = (distance*(document.getElementById("hourlyRate").value/60/60/1000)).toFixed(2);
             document.getElementById("time").innerHTML = String(distance).toHHMMSS();
         }
     }, 100);
