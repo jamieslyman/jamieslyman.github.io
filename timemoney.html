@@ -96,6 +96,7 @@
         if (seconds < 10) {seconds = "0"+seconds;}
         return hours+':'+minutes+':'+seconds;
     }
+    // My code starts here. The setInteral block was probably taken from somewhere else, but the code inside it is mine.
     if (getCookie("hourlyRate") != undefined) {
         document.getElementById("hourlyRate").value = getCookie("hourlyRate");
     } else {
