@@ -87,7 +87,7 @@ metafile = true
 
 [[files]]
 file = "mods/inspecio.toml"
-hash = "7baba0d5b6448760f7a0ad285c82633842efeeda7714571daa477486a4899c50"
+hash = "04e52fb1abeb1921e2de71447db36a81947a1eeed6d4709ed5cbe48c03f7dcab"
 metafile = true
 
 [[files]]
