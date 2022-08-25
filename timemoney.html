@@ -50,7 +50,7 @@
 
 <body>
     <div class="moneytime">
-        <p id="money" class="money">0.00</p>
+        <p id="money" class="money">0.000</p>
         <p id="time" class="time">00:00:00</p>
         <input id="hourlyRate" type="number" value=15>
         <button id="button" onclick="startStopTimer()">Start!</button>
@@ -97,7 +97,7 @@
         if (seconds < 10) {seconds = "0"+seconds;}
         return hours+':'+minutes+':'+seconds;
     }
-    // My code starts here. The setInteral block was probably taken from somewhere else, but the code inside it is mine.
+    // My code starts here. The setInterval block was probably taken from somewhere else, but the code inside it is mine.
     if (getCookie("hourlyRate") != undefined) {
         document.getElementById("hourlyRate").value = getCookie("hourlyRate");
     } else {
@@ -106,7 +106,7 @@
     var x = setInterval(function() {
         if (getCookie("time") != undefined) {
             var distance = new Date().getTime() - getCookie("time");
-            document.getElementById("money").innerHTML = (distance*(document.getElementById("hourlyRate").value/60/60/1000)).toFixed(2);
+            document.getElementById("money").innerHTML = (distance*(document.getElementById("hourlyRate").value/60/60/1000)).toFixed(3);
             document.getElementById("time").innerHTML = String(distance/1000).toHHMMSS();
         }
     }, 100);
